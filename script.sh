@@ -1,24 +1,26 @@
 #!/usr/bin/env bash
 
-AWS_ACCESS_KEY_ID=<<PON TU AWS_ACCESS_KEY_ID>>
-AWS_SECRET_ACCESS_KEY=<<PON TU AWS_SECRET_ACCESS_KEY>>
-
-app_list_bucket_s3()
+AWS_ACCESS_KEY_ID=PUT_YOUR_AWS_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY=PUT_YOUT_AWS_SECRET_ACCESS_KEY
+BUCKET_S3=bucket
+access_aws_credentials()
 {
     docker run \
     --env AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
     --env AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
     garland/aws-cli-docker \
+}
+
+app_list_bucket_s3()
+{
+    access_aws_credentials
     aws s3 ls
 }
 
 upload_file_s3()
 {
-    docker run \
-    --env AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
-    --env AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
-    garland/aws-cli-docker \
-    aws s3 ls
+    access_aws_credentials
+    aws s3 sync . s3://$BUCKET_S3
 }
 
 app_docker_images_build()
