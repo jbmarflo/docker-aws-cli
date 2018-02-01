@@ -1,0 +1,6 @@
+.idea
+composer.lock
+.idea/*
+.idea/
+.idea/funplify.iml
+.idea/workspace.xml
